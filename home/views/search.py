@@ -15,7 +15,6 @@ class Search(View):
             return HttpResponse("Invalid search query.")
 
         query = data["query"]
-        query = re.sub(r"\s+", " ", query).strip()
 
         if query == "":
             context = {"results": []}
@@ -23,6 +22,8 @@ class Search(View):
 
         if any(character.isdigit() for character in query):
             query = query.replace(" ", "")
+
+        query = re.sub(r"\s+", " ", query).strip()
 
         results = queries.search(query, 30, courses=True, professors=True)
 
