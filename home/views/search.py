@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import redirect, render
 from django.views import View
 from django.http import HttpResponse
@@ -13,6 +15,7 @@ class Search(View):
             return HttpResponse("Invalid search query.")
 
         query = data["query"]
+        query = re.sub(r"\s+", " ", query).strip()
 
         if query == "":
             context = {"results": []}
